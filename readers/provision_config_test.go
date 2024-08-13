@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	entity "github.com/upsun/lib-upsun/entity"
-	utils "github.com/upsun/lib-upsun/utility"
+	entity "github.com/upsun/lib-sun/entity"
+	utils "github.com/upsun/lib-sun/utility"
 )
 
 func TestReadProvisionFile(t *testing.T) {

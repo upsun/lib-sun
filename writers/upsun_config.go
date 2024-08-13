@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	entity "github.com/upsun/lib-upsun/entity"
+	entity "github.com/upsun/lib-sun/entity"
 	"gopkg.in/yaml.v3"
 )
 

@@ -5,8 +5,8 @@ import (
 	"log"
 	"strings"
 
-	entity "github.com/upsun/lib-upsun/entity"
-	utils "github.com/upsun/lib-upsun/utility"
+	entity "github.com/upsun/lib-sun/entity"
+	utils "github.com/upsun/lib-sun/utility"
 )
 
 const LEVEL_PROJECT = "project"

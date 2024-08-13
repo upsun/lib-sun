@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	utils "github.com/upsun/lib-upsun/utility"
+	utils "github.com/upsun/lib-sun/utility"
 )
 
 func RunHook(ws string, hooks ...string) {

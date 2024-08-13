@@ -3,7 +3,7 @@ package cmd
 import (
 	"log"
 
-	entity "github.com/upsun/lib-upsun/entity"
+	entity "github.com/upsun/lib-sun/entity"
 )
 
 func DisplayUnsupportedIntegrations(projectContext entity.ProjectGlobal) {

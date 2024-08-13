@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	app "github.com/upsun/lib-upsun"
-	entity "github.com/upsun/lib-upsun/entity"
+	app "github.com/upsun/lib-sun"
+	entity "github.com/upsun/lib-sun/entity"
 )
 
 const PATH_PREFIX = "cli-*-tmp"

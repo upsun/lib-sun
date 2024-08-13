@@ -3,7 +3,7 @@ package detector
 import (
 	"testing"
 
-	entity "github.com/upsun/lib-upsun/entity"
+	entity "github.com/upsun/lib-sun/entity"
 )
 
 const TEST_CONVERT_PATH = "../../tests/convert/"

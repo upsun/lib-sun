@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	assert "github.com/stretchr/testify/assert"
-	entity "github.com/upsun/lib-upsun/entity"
+	entity "github.com/upsun/lib-sun/entity"
 )
 
 const PSH_PRJ_ID = "a6gx2dq4x235u"

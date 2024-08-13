@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/getsentry/sentry-go"
-	version "github.com/upsun/lib-upsun"
+	version "github.com/upsun/lib-sun"
 )
 
 func StartReporters(appName string) {

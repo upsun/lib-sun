@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	app "github.com/upsun/lib-upsun"
+	app "github.com/upsun/lib-sun"
 )
 
 const TEST_CONVERT_PATH = "../../tests/convert/"

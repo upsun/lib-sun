@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"log"
 
-	entity "github.com/upsun/lib-upsun/entity"
-	utils "github.com/upsun/lib-upsun/utility"
+	entity "github.com/upsun/lib-sun/entity"
+	utils "github.com/upsun/lib-sun/utility"
 )
 
 type getAccess struct {
