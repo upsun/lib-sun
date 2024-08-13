@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	entity "github.com/upsun/lib-upsun/entity"
 	"gopkg.in/yaml.v3"
-	entity "upsun.com/lib-upsun/entity"
 )
 
 const TEST_CONVERT_PATH = "../../tests/convert/"

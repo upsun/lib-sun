@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	entity "upsun.com/lib-upsun/entity"
+	entity "github.com/upsun/lib-upsun/entity"
 )
 
 const PSH_CONFIG_PATH = ".platform"

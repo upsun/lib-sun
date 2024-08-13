@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	flag "github.com/spf13/pflag"
-	app "upsun.com/lib-upsun"
-	entity "upsun.com/lib-upsun/entity"
+	app "github.com/upsun/lib-upsun"
+	entity "github.com/upsun/lib-upsun/entity"
 )
 
 func Disclaimer(appName string) {

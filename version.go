@@ -1,7 +1,7 @@
 package version
 
 import (
-	entity "upsun.com/lib-upsun/entity"
+	entity "github.com/upsun/lib-upsun/entity"
 )
 
 const VERSION = "0.2.0"

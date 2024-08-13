@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	app "upsun.com/lib-upsun"
-	entity "upsun.com/lib-upsun/entity"
-	utils "upsun.com/lib-upsun/utility"
+	app "github.com/upsun/lib-upsun"
+	entity "github.com/upsun/lib-upsun/entity"
+	utils "github.com/upsun/lib-upsun/utility"
 )
 
 const REPO_BIN = "git"

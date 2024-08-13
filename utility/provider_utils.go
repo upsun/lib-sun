@@ -10,8 +10,8 @@ import (
 	"slices"
 	"strings"
 
-	app "upsun.com/lib-upsun"
-	entity "upsun.com/lib-upsun/entity"
+	app "github.com/upsun/lib-upsun"
+	entity "github.com/upsun/lib-upsun/entity"
 )
 
 var PROVIDER_SUPPORTED = []string{

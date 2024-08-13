@@ -5,9 +5,9 @@ import (
 	"log"
 	"strings"
 
-	app "upsun.com/lib-upsun"
-	entity "upsun.com/lib-upsun/entity"
-	utils "upsun.com/lib-upsun/utility"
+	app "github.com/upsun/lib-upsun"
+	entity "github.com/upsun/lib-upsun/entity"
+	utils "github.com/upsun/lib-upsun/utility"
 )
 
 func sshPath(sshUrl string, path string) string {

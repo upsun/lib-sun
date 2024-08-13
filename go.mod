@@ -1,4 +1,4 @@
-module upsun.com/lib-upsun
+module github.com/upsun/lib-upsun
 
 go 1.22.6
 

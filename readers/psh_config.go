@@ -5,8 +5,8 @@ import (
 	"os"
 	"strings"
 
+	entity "github.com/upsun/lib-upsun/entity"
 	"gopkg.in/yaml.v3"
-	entity "upsun.com/lib-upsun/entity"
 )
 
 const (

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	entity "github.com/upsun/lib-upsun/entity"
 	"gopkg.in/yaml.v3"
-	entity "upsun.com/lib-upsun/entity"
 )
 
 func GenerateUpsunConfigFile(metamodel entity.MetaConfig, outputFilePath string) {

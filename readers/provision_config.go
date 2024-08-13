@@ -7,9 +7,9 @@ import (
 	"path"
 	"strings"
 
+	entity "github.com/upsun/lib-upsun/entity"
+	utils "github.com/upsun/lib-upsun/utility"
 	"gopkg.in/yaml.v3"
-	entity "upsun.com/lib-upsun/entity"
-	utils "upsun.com/lib-upsun/utility"
 )
 
 func ReadProvisionFile(projectDstContext *entity.ProjectGlobal, provisionContext *entity.ProvisionGlobal, configPath string, ws utils.PathTmp) {
