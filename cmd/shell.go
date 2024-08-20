@@ -15,9 +15,12 @@ func RunHook(ws string, hooks ...string) {
 		payload := strings.Split(hook, " ")
 		cmd := payload[0]
 		payload = payload[1:]
-		_, _, err := utils.CallExePath(cmd, "", ws, payload...)
+		stdout, stderr, err := utils.CallExePath(cmd, "", ws, payload...)
 		if err != nil {
 			log.Println("Hook is not good !")
+			log.Printf("error  : %v\n", err)
+			log.Printf("stdout : %v\n", string(stdout))
+			log.Printf("stderr : %v\n", stderr)
 		}
 	}
 }

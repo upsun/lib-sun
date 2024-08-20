@@ -61,9 +61,12 @@ func ShallowCloneRepository(url string, version string, wsFolder string) {
 	os.RemoveAll(path.Join(wsFolder, ".git"))
 }
 
-func InitRepository(wsFolder string) {
+func InitRepository(projectContext entity.ProjectGlobal, wsFolder string) {
 	log.Print("Initialize GIT repository...")
-	payload := []string{"init"}
+	payload := []string{
+		"init",
+		"--initial-branch=" + projectContext.DefaultEnv,
+	}
 	callVCS(wsFolder, payload...)
 }
 
