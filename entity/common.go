@@ -58,6 +58,7 @@ type CliCloneArgs struct {
 }
 
 type CliScalingArgs struct {
+	Name         string
 	HostCountMin int
 	HostCountMax int
 	CpuUsageMin  float64
