@@ -183,6 +183,6 @@ func callVCS(wsFolder string, payload ...string) {
 
 	_, _, err := utils.CallExePath(REPO_BIN, "", wsFolder, payload...)
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
 	}
 }

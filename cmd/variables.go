@@ -139,7 +139,7 @@ func PopulateSensitive(projectContext entity.ProjectGlobal) {
 
 	payload := []string{
 		"--environment=" + projectContext.DefaultEnv,
-		//"--app=" + mount.Application,
+		//"--app=" + mount.Application, //TODO(mick) cannot be work for multi app
 		"env",
 	}
 	output, err := utils.CallCLIString(projectContext, "ssh", payload...)

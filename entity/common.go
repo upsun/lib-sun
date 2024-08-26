@@ -246,10 +246,15 @@ type ProvisionApplication struct {
 		Shell   string `yaml:"shell"`
 		Version string `yaml:"version"`
 	} `yaml:"mainstream"`
+	Size struct {
+		CPU string `yaml:"cpu"`
+		MEM string `yaml:"mem"`
+	} `yaml:"size"`
 	Files    map[string]string `yaml:"files"`
 	Services map[string]string `yaml:"services"`
 	Mounts   map[string]string `yaml:"mounts"`
-	Hook     []string          `yaml:"hook"`
+	Hook     string            `yaml:"hook"`
+	HookPost string            `yaml:"post-hook"`
 }
 
 type ProvisionGlobal struct {
@@ -262,6 +267,4 @@ type ProvisionGlobal struct {
 	} `yaml:"size"`
 	Variables map[string]string `yaml:"variables"`
 	Users     map[string]string `yaml:"users"`
-
-	Hook []string `yaml:"hook"`
 }
