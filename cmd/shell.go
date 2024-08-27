@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"log"
-	"strings"
 
 	entity "github.com/upsun/lib-sun/entity"
 	utils "github.com/upsun/lib-sun/utility"
@@ -14,10 +13,8 @@ func RunHook(ws string, hook string) {
 
 	// for _, hook := range hooks {
 	fmt.Println(hook)
-	payload := strings.Split(hook, " ")
-	cmd := payload[0]
-	payload = payload[1:]
-	stdout, stderr, err := utils.CallExePath(cmd, "", ws, payload...)
+	payload := []string{"-c", hook}
+	stdout, stderr, err := utils.CallExePath("sh", "", ws, payload...)
 
 	// Why twice ?
 	if err != nil {
@@ -26,6 +23,7 @@ func RunHook(ws string, hook string) {
 		log.Printf("stdout : %v\n", string(stdout))
 		log.Printf("stderr : %v\n", stderr)
 	} else {
+		fmt.Print(stderr)
 		fmt.Print(string(stdout))
 	}
 	// }
