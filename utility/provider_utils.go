@@ -19,7 +19,7 @@ var PROVIDER_SUPPORTED = []string{
 	entity.PSH_PROVIDER,
 	"ibexa",
 	"shopware",
-	"pimcore",
+	"pimcore-cloud",
 	"webpaas",
 }
 
