@@ -29,6 +29,7 @@ const UPS_PROVIDER = "upsun"
 type CliCommonArgs struct {
 	Verbose bool
 	Silent  bool
+	PathLog string
 }
 
 type CliConvertArgs struct {
