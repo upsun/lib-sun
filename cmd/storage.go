@@ -14,10 +14,10 @@ func sshPath(sshUrl string, path string) string {
 	return sshUrl + ":/app" + path + "/"
 }
 
-func getSshUrl(projectCtx entity.ProjectGlobal, mount entity.EnvMount) string {
+func getSshUrl(projectCtx entity.ProjectGlobal, appName string) string {
 	payload := []string{
 		"--environment=" + projectCtx.DefaultEnv,
-		"--app=" + mount.Application,
+		"--app=" + appName,
 		"--pipe",
 	}
 	sshUrl, err := utils.CallCLIString(projectCtx, "ssh", payload...)
@@ -36,7 +36,7 @@ func MountsExport(projectContext entity.ProjectGlobal, ws utils.PathTmp) {
 		folder := ws.MakeDataFolder(key) + "/"
 		log.Printf("Dump data for %v on %v", mount.Path, mount.Application)
 
-		sshUrl := getSshUrl(projectContext, mount)
+		sshUrl := getSshUrl(projectContext, mount.Application)
 		payload := []string{
 			"-azP",
 			sshPath(sshUrl, mount.Path),
@@ -69,7 +69,7 @@ func MountsImport(projectContext entity.ProjectGlobal) {
 	for _, mount := range projectContext.Mounts {
 		log.Printf("Restore dump data for %v on %v", mount.Path, mount.Application)
 
-		sshUrl := getSshUrl(projectContext, mount)
+		sshUrl := getSshUrl(projectContext, mount.Application)
 		payload := []string{
 			"-azP",
 			mount.DumpPath,

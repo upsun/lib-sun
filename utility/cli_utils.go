@@ -79,7 +79,7 @@ func InitLogger(appName string) {
 		// Hack need case without log file
 		mw = io.MultiWriter(os.Stdout)
 	} else {
-		logFile, err := os.OpenFile(fmt.Sprintf(app.Args.PathLog+"/log-%v-%v.log", appName, TimeStamp()), os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
+		logFile, err := os.OpenFile(fmt.Sprintf(app.Args.PathLog+"log-%v-%v.log", appName, TimeStamp()), os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
 		if err != nil {
 			panic(err)
 		}

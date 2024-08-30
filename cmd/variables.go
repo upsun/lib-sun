@@ -134,14 +134,17 @@ func VariablesEnvWrite(projectContext entity.ProjectGlobal) {
 	// TODO : Remove old variables
 }
 
-func PopulateSensitive(projectContext entity.ProjectGlobal) {
+func PopulateSensitive(projectContext entity.ProjectGlobal, appName string) {
 	log.Print("Get sensitive value from SSH container...")
 
 	payload := []string{
 		"--environment=" + projectContext.DefaultEnv,
-		//"--app=" + mount.Application, //TODO(mick) cannot be work for multi app
-		"env",
 	}
+	if appName != "" {
+		payload = append(payload, "--app="+appName)
+	}
+	payload = append(payload, "env")
+
 	output, err := utils.CallCLIString(projectContext, "ssh", payload...)
 	if err != nil {
 		log.Printf("command execution failed: %v \n", err)

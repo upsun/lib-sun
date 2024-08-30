@@ -42,8 +42,13 @@ func ImportRepository(projectContext entity.ProjectGlobal, wsFolder string) {
 	}
 
 	// Remove remote repository
-	payload := append([]string{"remote", "remove"}, projectContext.Provider)
-	callVCS(wsFolder, payload...)
+	payload := append([]string{"-c", "git remote | xargs -n1 git remote remove"}, projectContext.Provider)
+	fmt.Println(strings.Join(payload[1:], " "))
+
+	_, _, err := utils.CallExePath("sh", "", wsFolder, payload...)
+	if err != nil {
+		log.Print(err)
+	}
 }
 
 func ShallowCloneRepository(url string, version string, wsFolder string) {
