@@ -143,7 +143,7 @@ func PopulateSensitive(projectContext entity.ProjectGlobal, appName string) {
 	if appName != "" {
 		payload = append(payload, "--app="+appName)
 	}
-	payload = append(payload, "env")
+	payload = append(payload, "export")
 
 	output, err := utils.CallCLIString(projectContext, "ssh", payload...)
 	if err != nil {
@@ -153,10 +153,31 @@ func PopulateSensitive(projectContext entity.ProjectGlobal, appName string) {
 	envVars := make(map[string]string)
 	envVars_str := strings.Split(output, "\n")
 	for _, envVar_str := range envVars_str[:len(envVars_str)-1] {
-		envVar := strings.SplitN(envVar_str, "=", 2)
-		key := envVar[0]
-		value := envVar[1]
-		envVars[key] = value
+		// Sanitize
+		envVar_str_san := strings.Replace(envVar_str, "declare -x ", "", 1) // Remove 'declare -x ' from export command
+
+		envVar := strings.SplitN(envVar_str_san, "=", 2)
+		if len(envVar) == 2 {
+			key := envVar[0]
+			value := envVar[1]
+			// Sanitize
+			if strings.HasPrefix(value, "\"") { // Remove escape double quote
+				value = value[1:]            // Remove start
+				value = value[:len(value)-1] // Remove End
+			} else if strings.HasPrefix(value, "'") { // Remove escape simple quote
+				value = value[1:]            // Remove start
+				value = value[:len(value)-1] // Remove End
+			} else if strings.HasPrefix(value, "$'") { // Remove extquote case
+				value = value[2:]            // Remove start
+				value = value[:len(value)-1] // Remove End
+			} else if strings.HasPrefix(value, "$\"") { // Remove extquote case
+				value = value[3:]            // Remove start
+				value = value[:len(value)-2] // Remove End
+			}
+			envVars[key] = value
+		} else {
+			envVars[envVar[0]] = ""
+		}
 	}
 
 	sensitiveInjectValue(projectContext.Variables, envVars)
