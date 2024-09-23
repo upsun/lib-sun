@@ -10,7 +10,7 @@ import (
 	app "github.com/upsun/lib-sun"
 )
 
-const TEST_CONVERT_PATH = "../../tests/convert/"
+const TEST_CONVERT_PATH = "../tests/"
 
 func TestBuildTemporyWorkspace(t *testing.T) {
 	assert := assert.New(t)
@@ -26,14 +26,11 @@ func TestBuildTemporyWorkspace(t *testing.T) {
 }
 
 func TestBuildPersistWorkspace(t *testing.T) {
-	if os.Getenv("TEST_DEV") == "" {
-		t.Skip("Skipping not finished test")
-	}
-
 	assert := assert.New(t)
 
-	expected := "./data/"
-	actual := BuildPersistWorkspace()
+	expected := "/tmp/data-go-test/"
+	os.RemoveAll(expected)
+	actual := BuildPersistWorkspace(expected)
 
 	assert.Contains(actual.Root, expected)
 	assert.DirExists(actual.Root)
@@ -147,7 +144,7 @@ func TestCopyFile(t *testing.T) {
 	defer ws.CleanUp()
 
 	dst := path.Join(ws.Root, "config.yaml")
-	err := CopyFile(TEST_CONVERT_PATH+"config-ref.yaml", dst)
+	err := CopyFile(TEST_CONVERT_PATH+"project-upsun/.upsun/config-ref.yaml", dst)
 	assert.NoError(err)
 	assert.True(IsExist(dst))
 
@@ -163,4 +160,43 @@ func TestListDir(t *testing.T) {
 	dirs, err := ListDir(TEST_CONVERT_PATH)
 	assert.NoError(err)
 	assert.Len(dirs, 2)
+}
+
+func TestCopyDir(t *testing.T) {
+	assert := assert.New(t)
+	ws := BuildTemporyWorkspace()
+	defer ws.CleanUp()
+
+	dst := path.Join(ws.Root, "dst")
+	err := CopyDir(TEST_CONVERT_PATH+"project-upsun", dst)
+
+	assert.Empty(err)
+	assert.True(IsExist(dst))
+}
+
+func TestGetFile(t *testing.T) {
+	assert := assert.New(t)
+	ws := BuildTemporyWorkspace()
+	defer ws.CleanUp()
+
+	dst := path.Join(ws.Data, "README.md")
+
+	GetFile("https://raw.githubusercontent.com/upsun/.github/refs/heads/main/profile/README.md", dst, ws.Data)
+	assert.True(IsExist(dst))
+
+	dst = path.Join(ws.Root, "config.yaml")
+	GetFile("file://"+TEST_CONVERT_PATH+"project-upsun/.upsun/config-ref.yaml", dst, "./")
+
+	assert.True(IsExist(dst))
+}
+
+func TestTransfertConfigCustom(t *testing.T) {
+	assert := assert.New(t)
+	ws := BuildTemporyWorkspace()
+	defer ws.CleanUp()
+
+	src := path.Join(TEST_CONVERT_PATH, "project-psh")
+	dst := ws.Root
+	TransfertConfigCustom(src, dst)
+	assert.True(IsExist(path.Join(dst, "solr-config")))
 }

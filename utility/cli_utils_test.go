@@ -1,11 +1,14 @@
 package utils
 
 import (
+	"bytes"
+	"log"
 	"os"
 	"testing"
 
 	flag "github.com/spf13/pflag"
 	assert "github.com/stretchr/testify/assert"
+	entity "github.com/upsun/lib-sun/entity"
 )
 
 func TestDisclaimer(t *testing.T) {
@@ -42,4 +45,24 @@ func TestRequireFlag(t *testing.T) {
 	assert.True(IsFlagPassed("test"))
 
 	//TODO test case interactive
+}
+
+func TestLinkToProject(t *testing.T) {
+	assert := assert.New(t)
+
+	var buf bytes.Buffer
+	log.SetOutput(&buf)
+	defer func() {
+		log.SetOutput(os.Stderr)
+	}()
+
+	ctx := entity.MakeProjectContext(
+		entity.UPS_PROVIDER,
+		"xxxxxxx",
+		"master",
+	)
+	ctx.OrgEmail = "test"
+	LinkToProject(ctx)
+
+	assert.NotEmpty(buf.String())
 }

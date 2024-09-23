@@ -134,7 +134,7 @@ func HackAlias(providerRequest string) (string, string) {
 			env = "CLI_CONFIG_FILE=" + home + "/.platformsh/cli-config/ibexa-cli.yaml"
 		case "magento-cloud":
 			env = "CLI_CONFIG_FILE=" + home + "/.platformsh/cli-config/magento-cloud-cli.yaml"
-		case "pimcore":
+		case "pimcore-cloud":
 			env = "CLI_CONFIG_FILE=" + home + "/.platformsh/cli-config/pimcore-cli.yaml"
 		case "webpaas":
 			env = "CLI_CONFIG_FILE=" + home + "/.platformsh/cli-config/webpaas-cli.yaml"

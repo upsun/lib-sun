@@ -9,7 +9,7 @@ import (
 	entity "github.com/upsun/lib-sun/entity"
 )
 
-const PSH_CONFIG_PATH = ".platform"
+const PSH_CONFIG_PATH = ".platform/"
 
 // searchFile recursively searches for a file with the specified name in the given directory and its subdirectories.
 func searchFile(dir, targetFile string) ([]string, error) {

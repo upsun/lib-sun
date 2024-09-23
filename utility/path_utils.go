@@ -56,13 +56,13 @@ func BuildTemporyWorkspace() PathTmp {
 	return result
 }
 
-func BuildPersistWorkspace() PathTmp {
+func BuildPersistWorkspace(prefixPath string) PathTmp {
 	log.Print("Make persitant workspace...")
 
 	var err error
 	var result PathTmp
 
-	result.Root = "./data/"
+	result.Root = prefixPath
 	err = os.Mkdir(result.Root, 0750)
 	if err != nil {
 		log.Fatal(err)

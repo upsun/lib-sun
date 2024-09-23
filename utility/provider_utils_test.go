@@ -102,9 +102,9 @@ func TestHackAlias(t *testing.T) {
 		assert.Equal(entity.PSH_PROVIDER, cmd)
 
 		if provider == entity.PSH_PROVIDER {
-			assert.Empty(env)
+			assert.Empty(env, "for "+provider)
 		} else {
-			assert.Contains(env, "CLI_CONFIG_FILE=")
+			assert.Contains(env, "CLI_CONFIG_FILE=", "for "+provider)
 		}
 	}
 }
