@@ -9,7 +9,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-const TEST_CONVERT_PATH = "../tests/"
+const TEST_CONVERT_PATH = "../tests/project-psh"
 const TEST_PSH_PATH = ".platform/"
 
 func TestReadServices(t *testing.T) {
