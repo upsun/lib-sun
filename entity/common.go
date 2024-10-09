@@ -59,13 +59,14 @@ type CliCloneArgs struct {
 }
 
 type CliScalingArgs struct {
-	Name         string
-	HostCountMin int
-	HostCountMax int
-	CpuUsageMin  float64
-	CpuUsageMax  float64
-	MemUsageMin  float64
-	MemUsageMax  float64
+	Name            string
+	IncludeServices bool
+	HostCountMin    int
+	HostCountMax    int
+	CpuUsageMin     float64
+	CpuUsageMax     float64
+	MemUsageMin     float64
+	MemUsageMax     float64
 }
 
 // Project context content.
