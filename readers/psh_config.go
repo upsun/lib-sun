@@ -27,20 +27,27 @@ func readConfigFile(node *yaml.Node, filePath string) {
 		os.Exit(1)
 	}
 
-	// Unmarshal yaml file to node graph.
 	var sub_metamodel yaml.Node
-	err = yaml.Unmarshal(data_service, &sub_metamodel)
-	if err != nil {
-		fmt.Printf("Error parsing YAML file: %s\n", err)
-		os.Exit(1)
+	if len(data_service) > 0 {
+		// Unmarshal yaml file to node graph.
+
+		err = yaml.Unmarshal(data_service, &sub_metamodel)
+		if err != nil {
+			fmt.Printf("Error parsing YAML file: %s\n", err)
+			os.Exit(1)
+		}
+
+		// Config node type.
+		node.Kind = yaml.MappingNode
+		node.Tag = TAG_MAP
+
+		// Map to meta-model.
+		node.Content = append(node.Content, sub_metamodel.Content[0].Content...)
+	} else {
+		fmt.Printf("No content to append from %s\n", filePath)
+		// Map to meta-model.
+		//node.Content = append(node.Content, "")
 	}
-
-	// Config node type.
-	node.Kind = yaml.MappingNode
-	node.Tag = TAG_MAP
-
-	// Map to meta-model.
-	node.Content = append(node.Content, sub_metamodel.Content[0].Content...)
 }
 
 func ReadServices(metamodel *entity.MetaConfig, filePaths []string) {

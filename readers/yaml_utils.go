@@ -59,85 +59,111 @@ func CreateEntryEntity(keyName string, valueContent KeyValueNodes) KeyValueNodes
 }
 
 func AddEntry(node *yaml.Node, entry KeyValueNodes) {
-	node.Content = append(node.Content, entry.KeyNode, entry.ValueNode)
+	if node != nil && entry.KeyNode != nil {
+		node.Content = append(node.Content, entry.KeyNode, entry.ValueNode)
+	} else {
+		log.Printf("Cannot add to empty node !")
+	}
+
 }
 
 func FindEntry(node *yaml.Node, keyFinded string) KeyValueNodes {
-	nodeKey, nodeValue, _, _ := findChildNode(node, keyFinded, 0, MAX_RECURS)
-
 	result := NewKeyValueNodes()
-	result.KeyNode = nodeKey
-	result.ValueNode = nodeValue
+
+	if node != nil {
+		nodeKey, nodeValue, _, _ := findChildNode(node, keyFinded, 0, MAX_RECURS)
+		result.KeyNode = nodeKey
+		result.ValueNode = nodeValue
+	}
 
 	return result
 }
 
 func FindEntryFirstLevel(node *yaml.Node, keyFinded string) KeyValueNodes {
-	nodeKey, nodeValue, _, _ := findChildNode(node, keyFinded, 0, 1)
-
 	result := NewKeyValueNodes()
-	result.KeyNode = nodeKey
-	result.ValueNode = nodeValue
+
+	if node != nil {
+		nodeKey, nodeValue, _, _ := findChildNode(node, keyFinded, 0, 1)
+		result.KeyNode = nodeKey
+		result.ValueNode = nodeValue
+	}
 
 	return result
 }
 
 // Find a node by key.
-// Return key, value, parent, index.
+// Return key, value, parent, index. (multi-return => recursive call !)
 func findChildNode(node *yaml.Node, keyFinded string, level int, levelLimit int) (*yaml.Node, *yaml.Node, *yaml.Node, int) {
-	for i := 0; i < len(node.Content); i++ {
-		nodeKey := node.Content[i]
+	if node != nil && node.Content != nil {
+		for i := 0; i < len(node.Content); i++ {
+			nodeKey := node.Content[i]
 
-		if nodeKey.Value == keyFinded {
-			return nodeKey, node.Content[i+1], node, i
-		}
+			if nodeKey != nil {
+				if nodeKey.Value == keyFinded {
+					return nodeKey, node.Content[i+1], node, i
+				}
 
-		if level < levelLimit {
-			if nodeKey, nodeValue, nodeParent, index := findChildNode(nodeKey, keyFinded, level+1, levelLimit); nodeKey != nil {
-				return nodeKey, nodeValue, nodeParent, index
+				if level < levelLimit {
+					if nodeKey, nodeValue, nodeParent, index := findChildNode(nodeKey, keyFinded, level+1, levelLimit); nodeKey != nil {
+						return nodeKey, nodeValue, nodeParent, index
+					}
+				}
 			}
 		}
 	}
+
 	return nil, nil, nil, -1
 }
 
 func RemoveEntry(node *yaml.Node, keyFinded string) *yaml.Node {
-	_, _, nodeParent, index := findChildNode(node, keyFinded, 0, MAX_RECURS)
+	var nodeParent *yaml.Node
 
-	if nodeParent != nil {
-		content := nodeParent.Content
-		nodeParent.Content = append(content[:index], content[index+2:]...)
-		return nodeParent
-	} else {
-		return nil
+	if node != nil {
+		_, _, nodeParentT, index := findChildNode(node, keyFinded, 0, MAX_RECURS)
+		nodeParent = nodeParentT // Change visibility scope.
+
+		if nodeParent != nil && nodeParent.Content != nil {
+			content := nodeParent.Content
+			nodeParent.Content = append(content[:index], content[index+2:]...)
+		}
 	}
+
+	return nodeParent
 }
 
 func RemoveAllEntry(node *yaml.Node, keyFinded string) {
-	owner := RemoveEntry(node, keyFinded)
+	if node != nil {
+		owner := RemoveEntry(node, keyFinded)
 
-	for owner != nil {
-		log.Printf("- Remove '%s' field on line %v", keyFinded, owner.Line) // TODO(mick): return node key of parent
-		owner = RemoveEntry(node, keyFinded)
+		for owner != nil {
+			log.Printf("- Remove '%s' field on line %v", keyFinded, owner.Line) // TODO(mick): return node key of parent
+			owner = RemoveEntry(node, keyFinded)
+		}
 	}
 }
 
 func ReplaceEntry(node *yaml.Node, find string, replace string) *yaml.Node {
-	nodeFinded, _, _, _ := findChildNode(node, find, 0, MAX_RECURS)
+	var nodeFinded *yaml.Node
 
-	if nodeFinded != nil {
-		nodeFinded.Value = replace
-		return nodeFinded
+	if node != nil {
+		nodeFindedT, _, _, _ := findChildNode(node, find, 0, MAX_RECURS)
+		nodeFinded = nodeFindedT // Change visibility scope.
+
+		if nodeFinded != nil {
+			nodeFinded.Value = replace
+		}
 	}
 
-	return nil
+	return nodeFinded
 }
 
 func ReplaceAllEntry(node *yaml.Node, find string, replace string) {
-	owner := ReplaceEntry(node, find, replace)
+	if node != nil {
+		owner := ReplaceEntry(node, find, replace)
 
-	for owner != nil {
-		log.Printf("- Replace '%v' by '%v' line %v", find, replace, owner.Line) // TODO(mick): return node key of parent
-		owner = ReplaceEntry(node, find, replace)
+		for owner != nil {
+			log.Printf("- Replace '%v' by '%v' line %v", find, replace, owner.Line) // TODO(mick): return node key of parent
+			owner = ReplaceEntry(node, find, replace)
+		}
 	}
 }
