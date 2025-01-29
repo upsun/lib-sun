@@ -37,12 +37,17 @@ func readConfigFile(node *yaml.Node, filePath string) {
 			os.Exit(1)
 		}
 
-		// Config node type.
-		node.Kind = yaml.MappingNode
-		node.Tag = TAG_MAP
+		if sub_metamodel.Kind > 0 && len(sub_metamodel.Content) > 0 {
+			// Config node type.
+			node.Kind = yaml.MappingNode
+			node.Tag = TAG_MAP
 
-		// Map to meta-model.
-		node.Content = append(node.Content, sub_metamodel.Content[0].Content...)
+			// Map to meta-model.
+			node.Content = append(node.Content, sub_metamodel.Content[0].Content...)
+		} else {
+			fmt.Printf("No content to append from %s\n", filePath)
+		}
+
 	} else {
 		fmt.Printf("No content to append from %s\n", filePath)
 		// Map to meta-model.
