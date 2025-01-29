@@ -45,11 +45,11 @@ func readConfigFile(node *yaml.Node, filePath string) {
 			// Map to meta-model.
 			node.Content = append(node.Content, sub_metamodel.Content[0].Content...)
 		} else {
-			fmt.Printf("No content to append from %s\n", filePath)
+			fmt.Printf("No content to append (after parsing) from %s\n", filePath)
 		}
 
 	} else {
-		fmt.Printf("No content to append from %s\n", filePath)
+		fmt.Printf("No content to append (before parsing) from %s\n", filePath)
 		// Map to meta-model.
 		//node.Content = append(node.Content, "")
 	}
@@ -66,23 +66,33 @@ func ReadApplications(metamodel *entity.MetaConfig, filePaths []string, projectW
 		var read_node yaml.Node
 
 		readConfigFile(&read_node, filePath)
-		for _, appLevel := range read_node.Content {
-			var header_node yaml.Node
-			nameEntry := FindEntry(appLevel, KEY_NAME)
+		if read_node.Content[0].Kind == yaml.MappingNode {
+			fmt.Printf("Use array mode")
+			for _, appLevel := range read_node.Content {
+				var header_node yaml.Node
+				nameEntry := FindEntry(appLevel, KEY_NAME)
 
-			//  Name
-			header_node.Kind = yaml.ScalarNode
-			header_node.Tag = TAG_STRING
-			header_node.Value = nameEntry.ValueNode.Value
+				//  Name
+				header_node.Kind = yaml.ScalarNode
+				header_node.Tag = TAG_STRING
+				header_node.Value = nameEntry.ValueNode.Value
 
-			//  Value
-			value_node := appLevel
-			RemoveEntry(value_node, KEY_NAME)
+				//  Value
+				value_node := appLevel
+				RemoveEntry(value_node, KEY_NAME)
 
+				// Merge all
+				metamodel.Applications.Kind = yaml.MappingNode
+				metamodel.Applications.Tag = TAG_MAP
+				metamodel.Applications.Content = append(metamodel.Applications.Content, &header_node, value_node)
+			}
+		} else {
+			fmt.Printf("Use array mode")
 			// Merge all
 			metamodel.Applications.Kind = yaml.MappingNode
 			metamodel.Applications.Tag = TAG_MAP
-			metamodel.Applications.Content = append(metamodel.Applications.Content, &header_node, value_node)
+			metamodel.Applications.Content = append(metamodel.Applications.Content, read_node.Content...)
+
 		}
 	}
 }
