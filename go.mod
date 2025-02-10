@@ -1,6 +1,6 @@
 module github.com/upsun/lib-sun
 
-go 1.22.6
+go 1.23.5
 
 require (
 	github.com/getsentry/sentry-go v0.28.1
