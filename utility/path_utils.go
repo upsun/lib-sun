@@ -56,15 +56,15 @@ func BuildTemporyWorkspace() PathTmp {
 	return result
 }
 
-func BuildPersistWorkspace(prefixPath string) PathTmp {
+func BuildPersistWorkspace(workspacePath string) PathTmp {
 	log.Print("Make persitant workspace...")
 
 	var err error
 	var result PathTmp
 
-	result.Root = prefixPath
+	result.Root = workspacePath
 	err = os.Mkdir(result.Root, 0750)
-	if err != nil {
+	if err != nil && !os.IsExist(err) {
 		log.Fatal(err)
 	}
 
@@ -114,7 +114,7 @@ func TransfertConfigCustom(src string, dst string) {
 		if dir != "local" {
 			srcCustom := filepath.Join(absProjectSourceConfig, dir)
 			dstCustom := filepath.Join(dst, dir)
-			err := os.Mkdir(dstCustom, 0755)
+			err := os.Mkdir(dstCustom, 0750)
 			if err != nil {
 				log.Println(err)
 			}
