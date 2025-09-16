@@ -57,7 +57,6 @@ func FindConfig(searchDir string) (map[string][]string, error) {
 	for file, dir := range filesToCheck {
 		filePaths, err := searchFile(filepath.Join(searchDir, dir), file)
 		if err != nil {
-			fmt.Println("WARNING:", err)
 			continue
 		}
 		for _, filePath := range filePaths {
