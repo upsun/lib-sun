@@ -190,13 +190,13 @@ func TestGetFile(t *testing.T) {
 	assert.True(IsExist(dst))
 }
 
-func TestTransfertConfigCustom(t *testing.T) {
+func TestTransferConfigCustom(t *testing.T) {
 	assert := assert.New(t)
 	ws := BuildTemporyWorkspace()
 	defer ws.CleanUp()
 
 	src := path.Join(TEST_CONVERT_PATH, "project-psh")
 	dst := ws.Root
-	TransfertConfigCustom(src, dst)
+	TransferConfigCustom(src, dst)
 	assert.True(IsExist(path.Join(dst, "solr-config")))
 }
