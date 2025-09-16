@@ -106,8 +106,7 @@ func MakePshConfigPath(rootPath string, app string) (string, string) {
 	return pshDstAppPath, pshDstPath
 }
 
-func TransfertConfigCustom(src string, dst string) {
-	log.Println("Move custom config...")
+func TransferConfigCustom(src string, dst string) {
 	absProjectSourceConfig := filepath.Join(src, PSH_CONFIG_PATH)
 	dirs, _ := ListDir(absProjectSourceConfig)
 	for _, dir := range dirs {
