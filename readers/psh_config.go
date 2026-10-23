@@ -1,8 +1,10 @@
 package readers
 
 import (
+	"bytes"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	entity "github.com/upsun/lib-sun/entity"
@@ -26,6 +28,8 @@ func readConfigFile(node *yaml.Node, filePath string) {
 		fmt.Printf("Error reading YAML file: %s\n", err)
 		os.Exit(1)
 	}
+	// yaml.v3 attaches comments to the wrong nodes with CRLF line endings.
+	data_service = bytes.ReplaceAll(data_service, []byte("\r\n"), []byte("\n"))
 
 	var sub_metamodel yaml.Node
 	if len(data_service) > 0 {
@@ -120,6 +124,7 @@ func ReadPlatforms(metamodel *entity.MetaConfig, filePaths []string, projectWork
 		// Add project path
 		rootProject := strings.ReplaceAll(filePath, projectWorkspace, "")
 		rootProject = strings.ReplaceAll(rootProject, entity.PSH_PLATFORM, "")
+		rootProject = filepath.ToSlash(rootProject)
 
 		rootpath := CreateEntryString(KEY_ROOT, rootProject)
 
